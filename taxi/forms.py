@@ -7,7 +7,7 @@ from django.contrib.auth.forms import (
     ReadOnlyPasswordHashField
 )
 
-from taxi.models import Driver
+from taxi.models import Driver, Car
 
 
 class LicenseNumberField(forms.CharField):
@@ -57,3 +57,14 @@ class DriverLicenseUpdateForm(UserChangeForm):
     class Meta:
         model = Driver
         fields = ["license_number", ]
+
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = "__all__"
+        widgets = {
+            "drivers": forms.CheckboxSelectMultiple(
+                attrs={"class": "form-select drivers-field", "size": "5"}
+            )
+        }
